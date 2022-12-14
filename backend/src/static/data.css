@@ -1,0 +1,32 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+html {
+    height: 100%;
+}
+body {
+    height: 100%;
+}
+.container {
+    height: 100%;
+    background-image: linear-gradient(to right, #fbc2eb, #a6c1ee);
+    position:relative;
+}
+.add_line {
+    display: flex;
+    position: absolute;
+    margin-left: 35%;
+}
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    margin-left: 40%;
+}
+label {
+    color:rgb(48, 47, 48);
+    font-size: 30px;
+    font-family:"微软雅黑";
+    font-weight: bold;
+}

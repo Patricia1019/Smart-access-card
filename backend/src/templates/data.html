@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/data.css">
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $("#addform").submit(function(e) { // intercepts the submit event
+          $.ajax({ // make an AJAX request
+            type: "POST",
+            url: "http://8.134.190.122:80/api/addUserID", // it's the URL of your component B
+            data: $("#addform").serialize(), // serializes the form's elements
+            success: function(result, status)
+            {
+              // show the data you got from B in result div
+              if (result['permission'] == 'yes') {    
+                alert("添加成功，" + result['username'] + "可通过");
+              } else {
+                alert("添加失败，" + result['username'] + "不可通过");
+              }
+            }
+          });
+          e.preventDefault(); // avoid to execute the actual submit of the form
+        });
+      });
+    </script>
+    <script>
+        $(document).ready(function() {
+          $("#delform").submit(function(e) { // intercepts the submit event
+            $.ajax({ // make an AJAX request
+              type: "POST",
+              url: "http://8.134.190.122:80/api/deleteByUser", // it's the URL of your component B
+              data: $("#delform").serialize(), // serializes the form's elements
+              success: function(result, status)
+              {
+                // show the data you got from B in result div
+                if (result['permission'] == 'no') {    
+                  alert("删除成功，" + result['username'] + "已被删除");
+                } else {
+                  alert("删除失败" );
+                }
+              }
+            });
+            e.preventDefault(); // avoid to execute the actual submit of the form
+          });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+          $("#getform").submit(function(e) { // intercepts the submit event
+            $.ajax({ // make an AJAX request
+              type: "GET",
+              url: "http://8.134.190.122:80/api/getByUser", // it's the URL of your component B
+              data: $("#getform").serialize(), // serializes the form's elements
+              success: function(result, status)
+              {
+                // show the data you got from B in result div
+                if (result['permission'] == 'yes') {    
+                  alert(result['username'] + "存在");
+                } else {
+                  alert(result['username'] + "不存在");
+                }
+              }
+            });
+            e.preventDefault(); // avoid to execute the actual submit of the form
+          });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class=wrapper style="margin-top:50px;">
+            <label for = "ID_to_add">增加的门禁:</label>
+            <form id="addform">
+                <div style="margin-top:5px;">
+                    <input type="text" placeholder="cardID" name="cardID" id="ID_to_add" style="height:26px;">
+                    <input type="text" placeholder="username" name="username" id="username" style="height:26px;">
+                    <button type="submit" style="width:30px;height:30px">+</button>
+                </div>
+            </form>  
+            <div id="result"></div>
+        </div>
+        <br><br><br><br><br><br><br>
+        <div style="margin-top:10px;"></div>
+        <hr>
+        <div class=wrapper style="margin-top:20px;">
+            <label for = "user_to_del">删除的门禁:</label>
+            <form id="delform">
+                <div style="margin-top:5px;">
+                    <input type="text" placeholder="username" name="username" id="user_to_del" style="height:26px;">
+                    <button type="submit" style="width:30px;height:30px">-</button>
+                </div>
+            </form>
+        </div>
+        <br><br><br><br><br>
+        <div style="margin-top:10px;"></div>
+        <hr>
+        <div class=wrapper style="margin-top:20px;font-size:20px;">
+            <label for = "user_search">查询的门禁:</label>
+                <form id="getform">
+                    <div style="margin-top:5px;">
+                        <input type="text" placeholder="username" name="username" id="user_search" style="height:26px;">
+                        <button type="submit" style="width:30px;height:30px">?</button>
+                    </div>
+                </form>    
+        </div>
+    </div>
+</body>
+</html>
